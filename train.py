@@ -110,12 +110,12 @@ def evaluate(net, dataloader, logger=None):
 
 
     results = {
-        'loss': total_loss / total,
+        'val_loss': total_loss / total,
         'acc': val_acc
     }
 
     msg = '  Val   loss: %.3f | Acc: %.3f%% (%d)' % \
-          (results['loss'], results['acc'], total)
+          (results['val_loss'], results['acc'], total)
     if logger:
         logger.log(msg)
     else:
@@ -185,7 +185,6 @@ def train():
     elif N_GPUS == 1:
         logger.log('Single-GPU mode.')
 
-    test_stats = {}
     for epoch in range(START_EPOCH, EPOCH):
         logger.log('** Epoch %d: %s' % (epoch, LOGDIR))
 
@@ -213,7 +212,7 @@ def train():
         log_tr = ['train_loss', 'train_acc']
         log_val = ['val_loss', 'val_acc']
 
-        log_vector = [epoch] + [train_stats.get(k, 0) for k in log_tr] + [test_stats.get(k, 0) for k in log_val]
+        log_vector = [epoch] + [train_stats.get(k, 0) for k in log_tr] + [val_eval.get(k, 0) for k in log_val]
         log_vector = list(map(_convert_scala, log_vector))
 
         with open(LOG_CSV, 'a') as f:
