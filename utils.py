@@ -17,7 +17,7 @@ class Logger(object):
         if train:
             if len(os.listdir(logdir)) != 0:
                 print(logdir)
-                ans = input("log_dir is not empty. All data inside log_dir will be deleted. "
+                ans = input("Folder is not empty. All data inside folder will be deleted. "
                                 "Will you proceed [y/N]? ")
                 if ans in ['y', 'Y']:
                     shutil.rmtree(logdir)
@@ -30,11 +30,11 @@ class Logger(object):
 
     def set_dir(self, logdir, log_fn='log.txt'):
         self.logdir = logdir
-        # if not os.path.exists(logdir):
-        #     os.mkdir(logdir)
+        if not os.path.exists(logdir):
+            os.mkdir(logdir)
         if os.path.exists(os.path.join(logdir, log_fn)):
             print(os.path.join(logdir, log_fn))
-            ans = input("log_dir is not empty. log_dir will be deleted. "
+            ans = input("log file exists. log file will be deleted. "
                             "Will you proceed [y/N]? ")
             if ans in ['y', 'Y']:
                 os.remove(os.path.join(logdir, log_fn))
