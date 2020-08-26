@@ -196,7 +196,7 @@ def train():
         ## Evaluation ##
         train_eval = evaluate(net, train_loader, logger=logger)
         val_eval = evaluate(net, val_loader, logger=logger)
-        val_acc = val_eval['acc']
+        val_acc = val_eval['val_acc']
         if epoch >= ARGS.start_save:
             if val_acc >= BEST_VAL:
                 BEST_VAL = val_acc
